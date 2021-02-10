@@ -11,9 +11,10 @@ exports.getPosts = async (req, res, next) => {
 	const currentPage = req.query.page || 1;
 	const perPage = 2;
 	let totalItems;
+	console.log('Aca');
 	try {
 		const totalItems = await Post.find().countDocuments();
-		const post = await Post.find()
+		const posts = await Post.find()
 			.skip((currentPage - 1) * perPage)
 			.limit(perPage);
 
