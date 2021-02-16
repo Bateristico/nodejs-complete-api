@@ -58,6 +58,7 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
+// socket io requests
 
 // error handler
 app.use((error, req, res, next) => {
@@ -71,7 +72,11 @@ app.use((error, req, res, next) => {
 mongoose
 	.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then((result) => {
-		console.log(`DB up and running`);
-		app.listen(8080);
+		console.log(`API up and running`);
+		const server = app.listen(8080);
+		const io = require('./socket').init(server);
+		io.on('connection', (socket) => {
+			console.log('Client connected');
+		});
 	})
 	.catch((err) => console.log(err));
