@@ -45,6 +45,7 @@ describe('Auth middleware', function () {
 		// mock jwt verification
 		sinon.stub(jwt, 'verify');
 		jwt.verify.returns({ userId: 'fake user' });
+
 		authMiddleware(req, {}, () => {});
 		expect(req).to.have.property('userId');
 		expect(req).to.have.property('userId', 'fake user');
